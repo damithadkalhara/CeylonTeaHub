@@ -1,0 +1,227 @@
+/* Ceylon Tea Hub - Luxury Custom Stylesheet */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-display: 'Cinzel', serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  
+  --color-brand-primary: #0F382A;
+  --color-brand-secondary: #164E3D;
+  --color-brand-dark: #08231A;
+  --color-brand-gold: #D4AF37;
+  --color-brand-gold-light: #E5C07B;
+  --color-brand-gold-dark: #A27B1E;
+  --color-cream-bg: #FBF9F4;
+  --color-cream-card: #F4EFE6;
+  --color-tea-leaf: #2E7D32;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-cream-bg);
+  color: #27272A;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3, .font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0d281e;
+}
+::-webkit-scrollbar-thumb {
+  background: #D4AF37;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #E5C07B;
+}
+
+/* Luxury Gold Text Gradient */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #F9E79F 0%, #D4AF37 50%, #AA771C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #E5C07B 0%, #D4AF37 50%, #B38728 100%);
+}
+
+.bg-emerald-gradient {
+  background: linear-gradient(145deg, #0b291e 0%, #0F382A 50%, #164E3D 100%);
+}
+
+.border-gold-glow {
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.12);
+}
+
+.border-gold-glow:hover {
+  border-color: rgba(212, 175, 55, 0.7);
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
+}
+
+/* Glassmorphism */
+.glass-dark {
+  background: rgba(11, 41, 30, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.glass-light {
+  background: rgba(251, 249, 244, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+/* Animations */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 8px rgba(212,175,55,0.4)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 16px rgba(212,175,55,0.8)); }
+}
+
+.animate-float {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* Luxury Card Hover */
+.luxury-card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 35px -10px rgba(11, 41, 30, 0.15), 0 0 20px rgba(212, 175, 55, 0.1);
+}
+
+/* Product Image Zoom */
+.zoom-container {
+  overflow: hidden;
+}
+
+.zoom-image {
+  transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.zoom-container:hover .zoom-image {
+  transform: scale(1.06);
+}
+
+/* Shimmer placeholder */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #ece6da 25%, #f6f2ea 50%, #ece6da 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Toast Container */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.toast-item {
+  pointer-events: auto;
+  min-width: 300px;
+  max-width: 420px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transform: translateX(120%);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast-item.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Modal and Drawer transitions */
+.drawer-backdrop {
+  transition: opacity 0.35s ease-in-out;
+}
+
+.drawer-panel {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Tea leaf water ripple */
+@keyframes ripple {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.ripple-ring {
+  position: absolute;
+  border: 2px solid rgba(212, 175, 55, 0.4);
+  border-radius: 50%;
+  animation: ripple 2.5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+/* Badge Glow */
+.badge-gold {
+  background: rgba(212, 175, 55, 0.15);
+  color: #92690a;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+.badge-emerald {
+  background: rgba(15, 56, 42, 0.12);
+  color: #0F382A;
+  border: 1px solid rgba(15, 56, 42, 0.25);
+}
+
+/* Print Invoice Styling */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #invoice-print-area, #invoice-print-area * {
+    visibility: visible;
+  }
+  #invoice-print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}

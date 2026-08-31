@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Express Checkout | Ceylon Tea Hub</title>
+  <meta name="description" content="Secure international checkout for Ceylon Tea Hub. Worldwide express air delivery directly from Sri Lanka.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              primary: '#0F382A',
+              secondary: '#164E3D',
+              dark: '#08231A',
+              gold: '#D4AF37',
+              goldLight: '#E5C07B',
+              cream: '#FBF9F4',
+              card: '#F4EFE6'
+            }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            display: ['Cinzel', 'serif'],
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <link rel="stylesheet" href="assets/css/custom.css">
+</head>
+<body class="bg-[#FBF9F4] text-zinc-800 antialiased selection:bg-[#D4AF37]/30 selection:text-[#0F382A]">
+
+  <!-- Minimal Checkout Header -->
+  <header class="bg-[#0F382A] text-white py-4 border-b border-[#D4AF37]/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-[#D4AF37] flex items-center justify-center text-[#0F382A] font-bold">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+        </div>
+        <span class="font-display font-bold text-lg tracking-wider uppercase text-white">Ceylon Tea Hub</span>
+      </a>
+
+      <!-- Security Reassurance & Currency -->
+      <div class="flex items-center gap-4 text-xs">
+        <div class="flex items-center gap-1.5 text-[#E5C07B]">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          <span class="hidden sm:inline font-semibold">256-Bit SSL Encrypted Global Checkout</span>
+        </div>
+
+        <select class="currency-dropdown bg-[#08231A] text-[#E5C07B] border border-[#D4AF37]/40 text-xs font-semibold rounded-lg px-2.5 py-1 focus:outline-none">
+          <option value="USD">🇺🇸 USD ($)</option>
+          <option value="EUR">🇪🇺 EUR (€)</option>
+          <option value="GBP">🇬🇧 GBP (£)</option>
+          <option value="AUD">🇦🇺 AUD (A$)</option>
+          <option value="CAD">🇨🇦 CAD (C$)</option>
+          <option value="JPY">🇯🇵 JPY (¥)</option>
+          <option value="AED">🇦🇪 AED (د.إ)</option>
+          <option value="LKR">🇱🇰 LKR (Rs)</option>
+          <option value="SGD">🇸🇬 SGD (S$)</option>
+        </select>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Checkout Container -->
+  <main class="py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Checkout Interactive Form State (Hidden when order placed) -->
+      <div id="checkout-flow-container">
+        
+        <div class="mb-8">
+          <h1 class="text-2xl sm:text-3xl font-serif font-bold text-gray-900">Worldwide Express Air Checkout</h1>
+          <p class="text-xs text-stone-500 mt-1">Dispatched fresh from Colombo, Sri Lanka with full customs clearance.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          
+          <!-- Left: Multi-Step Forms -->
+          <div class="lg:col-span-7 space-y-8">
+            
+            <!-- Step 1: Customer & Shipping Address -->
+            <div class="bg-white rounded-2xl p-6 sm:p-8 border border-stone-200 shadow-sm">
+              <div class="flex items-center gap-3 pb-4 border-b border-stone-200 mb-6">
+                <span class="w-7 h-7 rounded-full bg-[#0F382A] text-[#E5C07B] flex items-center justify-center font-bold text-xs">1</span>
+                <h3 class="font-serif font-bold text-lg text-gray-900">Delivery Destination & Contact</h3>
+              </div>
+
+              <form id="shipping-form" class="space-y-4 text-xs">
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block font-bold text-gray-700 uppercase tracking-wider mb-1.5">First Name *</label>
+                    <input type="text" id="ship-fname" required value="Alexander" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-[#0F382A] font-medium text-sm">
+                  </div>
+                  <div>
+                    <label class="block font-bold text-gray-700 uppercase tracking-wider mb-1.5">Last Name *</label>
+                    <input type="text" id="ship-lname" required value="Hamilton" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-[#0F382A] font-medium text-sm">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block font-bold text-gray-700 uppercase tracking-wider mb-1.5">Email (For Shipment Tracking) *</label>
+                    <input type="email" id="ship-email" required value="alexander.hamilton@heritage.org" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-[#0F382A] font-medium text-sm">
+                  </div>
+                  <div>
+                    <label class="block font-bold text-gray-700 uppercase tracking-wider mb-1.5">Phone (Carrier Notifications) *</label>
+                    <input type="tel" id="ship-phone" required value="+1 (555) 349-2049" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-[#0F382A] font-medium text-sm">
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block font-bold text-gray-700 uppercase tracking-wider mb-1.5">Country / Region *</label>
+                  <select id="ship-country" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-[#0F382A] font-medium text-sm">
+                    <option value="United States">🇺🇸 United States</option>
+                    <option value="United Kingdom">🇬🇧 United Kingdom</option>
+                    <option value="Germany">🇩🇪 Germany</option>
+                    <option value="France">🇫🇷 France</option>
+                    <option value="Japan">🇯🇵 Japan</option>
+                    <option value="Australia">🇦🇺 Australia</option>
+                    <option value="Canada">🇨🇦 Canada</option>
+                    <option value="United Arab Emirates">🇦🇪 United Arab Emirates</option>
+                    <option value="Singapore">🇸🇬 Singapore</option>
+                    <option value="Switzerland">🇨🇭 Switzerland</option>
+                    <option value="Sri Lanka">🇱🇰 Sri Lanka (Local Delivery)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block font-bold text-gray-700 uppercase tracking-wider mb-1.5">Street Address *</label>
+                  <input type="text" id="ship-address" required value="55 Wall Street, Suite 400" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-[#0F382A] font-medium text-sm">
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label class="block font-bold text-gray-700 uppercase tracking-wider mb-1.5">City *</label>
+                    <input type="text" id="ship-city" required value="New York" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-[#0F382A] font-medium text-sm">
+                  </div>
+                  <div>
+                    <label class="block font-bold text-gray-700 uppercase tracking-wider mb-1.5">State / Province *</label>
+                    <input type="text" id="ship-state" required value="NY" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-[#0F382A] font-medium text-sm">
+                  </div>
+                  <div>
+                    <label class="block font-bold text-gray-700 uppercase tracking-wider mb-1.5">Postal Code *</label>
+                    <input type="text" id="ship-zip" required value="10005" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-[#0F382A] font-medium text-sm">
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
+            <!-- Step 2: Shipping Method -->
+            <div class="bg-white rounded-2xl p-6 sm:p-8 border border-stone-200 shadow-sm">
+              <div class="flex items-center gap-3 pb-4 border-b border-stone-200 mb-6">
+                <span class="w-7 h-7 rounded-full bg-[#0F382A] text-[#E5C07B] flex items-center justify-center font-bold text-xs">2</span>
+                <h3 class="font-serif font-bold text-lg text-gray-900">International Air Freight Method</h3>
+              </div>
+
+              <div class="space-y-3">
+                <label class="flex items-center justify-between p-4 rounded-xl border border-[#0F382A] bg-[#0F382A]/5 cursor-pointer">
+                  <div class="flex items-center gap-3">
+                    <input type="radio" name="shipping-carrier" value="dhl" checked class="accent-[#0F382A]">
+                    <div>
+                      <strong class="text-sm font-bold text-gray-900 block">DHL Express Global Priority Air (3-5 Days)</strong>
+                      <span class="text-xs text-stone-500">Fully tracked & insulated climate-sealed packing from Colombo.</span>
+                    </div>
+                  </div>
+                  <span class="text-xs font-bold text-[#0F382A]" id="ship-option-cost">Included</span>
+                </label>
+
+                <label class="flex items-center justify-between p-4 rounded-xl border border-stone-200 hover:border-stone-400 cursor-pointer">
+                  <div class="flex items-center gap-3">
+                    <input type="radio" name="shipping-carrier" value="fedex" class="accent-[#0F382A]">
+                    <div>
+                      <strong class="text-sm font-bold text-gray-900 block">FedEx International Priority Air (2-4 Days)</strong>
+                      <span class="text-xs text-stone-500">Direct airport courier pickup with signature delivery.</span>
+                    </div>
+                  </div>
+                  <span class="text-xs font-bold text-stone-700">+<span data-price-usd="5">$5.00</span></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Step 3: Payment Method -->
+            <div class="bg-white rounded-2xl p-6 sm:p-8 border border-stone-200 shadow-sm">
+              <div class="flex items-center gap-3 pb-4 border-b border-stone-200 mb-6">
+                <span class="w-7 h-7 rounded-full bg-[#0F382A] text-[#E5C07B] flex items-center justify-center font-bold text-xs">3</span>
+                <h3 class="font-serif font-bold text-lg text-gray-900">Payment Simulation</h3>
+              </div>
+
+              <div class="space-y-4">
+                
+                <!-- Payment Type Switcher -->
+                <div class="grid grid-cols-3 gap-3">
+                  <button type="button" onclick="setPayMethod('card')" id="pay-btn-card" class="p-3 rounded-xl border-2 border-[#0F382A] bg-[#0F382A]/5 text-[#0F382A] font-bold text-xs text-center flex flex-col items-center gap-1">
+                    <span>💳 Credit Card</span>
+                  </button>
+                  <button type="button" onclick="setPayMethod('paypal')" id="pay-btn-paypal" class="p-3 rounded-xl border border-stone-200 text-stone-600 font-medium text-xs text-center flex flex-col items-center gap-1 hover:border-stone-400">
+                    <span>🅿️ PayPal</span>
+                  </button>
+                  <button type="button" onclick="setPayMethod('applepay')" id="pay-btn-applepay" class="p-3 rounded-xl border border-stone-200 text-stone-600 font-medium text-xs text-center flex flex-col items-center gap-1 hover:border-stone-400">
+                    <span>🍎 Apple Pay</span>
+                  </button>
+                </div>
+
+                <!-- Credit Card Interactive Box -->
+                <div id="card-payment-box" class="space-y-4 pt-4">
+                  
+                  <!-- Virtual Card Preview -->
+                  <div class="bg-gradient-to-tr from-[#08231A] via-[#0F382A] to-[#164E3D] text-white rounded-2xl p-6 shadow-xl border border-[#D4AF37]/30 max-w-sm mx-auto text-xs space-y-4">
+                    <div class="flex justify-between items-center">
+                      <span class="font-display font-bold text-[#E5C07B] tracking-wider text-sm">CEYLON TEA HUB</span>
+                      <span class="text-base">💳</span>
+                    </div>
+                    <div class="text-base sm:text-lg font-mono tracking-widest text-[#E5C07B] py-2" id="preview-card-number">
+                      4532 •••• •••• 8892
+                    </div>
+                    <div class="flex justify-between items-center text-[10px] text-zinc-300">
+                      <div>
+                        <span class="block uppercase text-zinc-400">Cardholder</span>
+                        <span class="font-semibold text-white uppercase" id="preview-card-name">Alexander Hamilton</span>
+                      </div>
+                      <div>
+                        <span class="block uppercase text-zinc-400">Expires</span>
+                        <span class="font-semibold text-white" id="preview-card-exp">08/28</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="space-y-3 pt-2">
+                    <div>
+                      <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Card Number *</label>
+                      <input type="text" id="card-num" value="4532 8901 2345 8892" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-[#0F382A] font-mono text-sm">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                      <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Expiry (MM/YY) *</label>
+                        <input type="text" id="card-exp" value="08/28" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-[#0F382A] font-mono text-sm">
+                      </div>
+                      <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">CVV / CVC *</label>
+                        <input type="password" id="card-cvv" value="894" maxlength="4" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-[#0F382A] font-mono text-sm">
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div id="paypal-box" class="hidden p-6 bg-blue-50 border border-blue-200 rounded-2xl text-center text-xs text-blue-900">
+                  <p class="font-bold text-sm mb-1">PayPal Express Checkout</p>
+                  <p>You will be directed to PayPal's secure gateway to complete authentication.</p>
+                </div>
+
+                <div id="applepay-box" class="hidden p-6 bg-zinc-100 border border-zinc-300 rounded-2xl text-center text-xs text-zinc-900">
+                  <p class="font-bold text-sm mb-1">Apple Pay 1-Touch</p>
+                  <p>Double-click side button or use Touch ID to authorize payment.</p>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Place Order Final CTA Button -->
+            <button type="button" onclick="submitOrder()" class="w-full py-4 px-8 bg-[#0F382A] text-[#E5C07B] hover:bg-[#164E3D] font-serif font-bold text-base rounded-2xl shadow-2xl transition-all flex items-center justify-center gap-3 active:scale-98">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+              <span>Complete & Dispatch Global Order</span>
+            </button>
+
+          </div>
+
+          <!-- Right: Order Summary Sticky Card -->
+          <div class="lg:col-span-5 bg-white rounded-2xl p-6 sm:p-8 border border-stone-200 shadow-sm sticky top-28 space-y-6">
+            <h3 class="font-serif font-bold text-lg text-gray-900 pb-4 border-b border-stone-200">Order Summary</h3>
+
+            <!-- Itemized Products in Cart -->
+            <div class="space-y-4 max-h-72 overflow-y-auto pr-1" id="checkout-items-list">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- Promo Code Input -->
+            <div class="pt-4 border-t border-stone-200">
+              <div class="flex gap-2">
+                <input type="text" id="checkout-coupon-input" placeholder="Promo code (CEYLON10)" class="flex-1 px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl uppercase text-xs font-semibold focus:outline-none focus:border-[#0F382A]">
+                <button onclick="applyCheckoutCoupon()" class="px-4 py-2 bg-[#0F382A] text-[#E5C07B] text-xs font-bold rounded-xl hover:bg-[#164E3D]">Apply</button>
+              </div>
+            </div>
+
+            <!-- Price Breakdown -->
+            <div class="space-y-2 text-xs text-stone-600 pt-4 border-t border-stone-200">
+              <div class="flex justify-between">
+                <span>Cart Subtotal:</span>
+                <span id="checkout-subtotal" class="font-bold text-gray-900">$0.00</span>
+              </div>
+              <div id="checkout-discount-row" class="hidden flex justify-between text-emerald-600 font-semibold">
+                <span>Discount:</span>
+                <span id="checkout-discount">-$0.00</span>
+              </div>
+              <div class="flex justify-between">
+                <span>International Air Shipping:</span>
+                <span id="checkout-shipping" class="font-semibold text-stone-900">$0.00</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Customs Duties & Taxes:</span>
+                <span class="text-emerald-700 font-semibold">Included (Pre-Cleared)</span>
+              </div>
+              <div class="flex justify-between text-lg font-serif font-bold text-gray-900 pt-3 border-t border-stone-200">
+                <span>Total Due:</span>
+                <span id="checkout-total" class="text-[#0F382A]">$0.00</span>
+              </div>
+            </div>
+
+            <!-- Trust Reassurances -->
+            <div class="p-3.5 bg-[#FBF9F4] rounded-xl border border-amber-900/10 space-y-2 text-[11px] text-stone-500">
+              <div class="flex items-center gap-2 text-stone-700 font-semibold">
+                <span>🦁</span>
+                <span>Official Sri Lanka Tea Board Certified Export</span>
+              </div>
+              <div class="flex items-center gap-2 text-stone-700 font-semibold">
+                <span>📦</span>
+                <span>Insulated nitrogen-flushed air packaging</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Order Confirmation State (Rendered upon Order Submission) -->
+      <div id="order-confirmed-container" class="hidden max-w-3xl mx-auto">
+        
+        <div class="bg-white rounded-3xl p-8 sm:p-12 border border-amber-900/20 shadow-2xl space-y-8" id="invoice-print-area">
+          
+          <!-- Top Header -->
+          <div class="text-center pb-8 border-b border-stone-200">
+            <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+              ✓
+            </div>
+            <span class="text-xs font-bold text-emerald-700 uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">Order Successfully Placed & Dispatched to Estate</span>
+            <h2 class="text-3xl font-serif font-bold text-gray-900 mt-3 mb-1">Thank You for Your Order!</h2>
+            <p class="text-xs text-stone-500">We have sent the confirmation receipt and air waybill notice to your email.</p>
+          </div>
+
+          <!-- Tracking & Order Details Box -->
+          <div class="bg-[#FBF9F4] rounded-2xl p-6 border border-amber-900/10 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center text-xs">
+            <div>
+              <span class="text-stone-400 uppercase font-bold block text-[10px]">Air Waybill / Order #</span>
+              <span id="confirmed-order-id" class="font-mono font-bold text-[#0F382A] text-sm">CTH-AIR-849204</span>
+            </div>
+            <div>
+              <span class="text-stone-400 uppercase font-bold block text-[10px]">Delivery Carrier</span>
+              <span class="font-bold text-gray-900">DHL Express Air</span>
+            </div>
+            <div>
+              <span class="text-stone-400 uppercase font-bold block text-[10px]">Estimated Arrival</span>
+              <span class="font-bold text-gray-900">3-5 Business Days</span>
+            </div>
+            <div>
+              <span class="text-stone-400 uppercase font-bold block text-[10px]">Total Paid</span>
+              <span id="confirmed-total-paid" class="font-bold text-[#0F382A] text-sm">$0.00</span>
+            </div>
+          </div>
+
+          <!-- Customer Address Summary -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs text-stone-600 pt-4 border-t border-stone-200">
+            <div>
+              <strong class="text-gray-900 font-serif block text-sm mb-1">Shipping Destination</strong>
+              <p id="confirmed-cust-name" class="font-semibold text-gray-800">Alexander Hamilton</p>
+              <p id="confirmed-cust-address">55 Wall Street, Suite 400</p>
+              <p id="confirmed-cust-city">New York, NY 10005, United States</p>
+              <p id="confirmed-cust-phone">+1 (555) 349-2049</p>
+            </div>
+            <div>
+              <strong class="text-gray-900 font-serif block text-sm mb-1">Payment Confirmation</strong>
+              <p class="font-semibold text-gray-800">Card ending in •••• 8892</p>
+              <p>Status: <span class="text-emerald-700 font-bold">Authorized & Settled</span></p>
+              <p>Customs Clearance: <span class="text-emerald-700 font-bold">Pre-Paid (DDP)</span></p>
+            </div>
+          </div>
+
+          <!-- Ordered Items Summary Table -->
+          <div class="pt-4 border-t border-stone-200">
+            <strong class="text-gray-900 font-serif block text-sm mb-3">Itemized Harvest Manifest</strong>
+            <div id="confirmed-items-list" class="space-y-2 text-xs">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Action Buttons (Print & Track) -->
+          <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-stone-200">
+            <button onclick="window.print()" class="flex-1 py-3 px-6 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+              <span>Print Official Tax Invoice Receipt</span>
+            </button>
+
+            <a id="track-order-btn-link" href="track-order.html" class="flex-1 py-3 px-6 bg-[#0F382A] hover:bg-[#164E3D] text-[#E5C07B] rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-2 text-center">
+              <span>Track Live Air Shipment →</span>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Universal Footer -->
+  <footer class="bg-[#04120D] text-zinc-400 py-8 border-t border-white/10 text-xs text-center">
+    <div class="max-w-7xl mx-auto px-4">
+      <p>© 2026 Ceylon Tea Hub (Pvt) Ltd. All Rights Reserved. Pure Ceylon Lion Logo License #SLTB/084.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/currency.js"></script>
+  <script src="assets/js/wishlist.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <script src="assets/js/toast.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCheckoutSummary();
+
+      // Card inputs live listener
+      const numInput = document.getElementById('card-num');
+      if (numInput) {
+        numInput.addEventListener('input', (e) => {
+          document.getElementById('preview-card-number').textContent = e.target.value || '•••• •••• •••• ••••';
+        });
+      }
+
+      window.addEventListener('cartUpdated', () => {
+        renderCheckoutSummary();
+      });
+
+      window.addEventListener('currencyChanged', () => {
+        renderCheckoutSummary();
+      });
+    });
+
+    function renderCheckoutSummary() {
+      const itemsContainer = document.getElementById('checkout-items-list');
+      if (!itemsContainer || !window.cartManager) return;
+
+      const cart = window.cartManager.getCart();
+      const fmt = (usd) => window.currencyManager ? window.currencyManager.format(usd) : `$${usd.toFixed(2)}`;
+
+      if (cart.length === 0) {
+        itemsContainer.innerHTML = `
+          <div class="text-center py-6 text-xs text-stone-500">
+            <p>Your tea bag is empty.</p>
+            <a href="shop.html" class="inline-block mt-2 text-[#0F382A] font-bold underline">Explore Catalog</a>
+          </div>
+        `;
+      } else {
+        itemsContainer.innerHTML = cart.map(item => `
+          <div class="flex items-center justify-between gap-3 text-xs py-2 border-b border-stone-100 last:border-0">
+            <img src="${item.image}" alt="${item.name}" class="w-10 h-10 object-cover rounded-lg flex-shrink-0">
+            <div class="flex-1 min-w-0">
+              <div class="font-serif font-bold text-gray-900 truncate">${item.name}</div>
+              <div class="text-stone-500 text-[11px]">${item.quantity}x ${item.packSize}</div>
+            </div>
+            <div class="font-bold text-gray-900" data-price-usd="${item.priceUSD * item.quantity}">
+              ${fmt(item.priceUSD * item.quantity)}
+            </div>
+          </div>
+        `).join('');
+      }
+
+      const subtotal = window.cartManager.getSubtotalUSD();
+      const discount = window.cartManager.getDiscountUSD();
+      const shipping = window.cartManager.getShippingUSD();
+      const total = window.cartManager.getTotalUSD();
+
+      document.getElementById('checkout-subtotal').textContent = fmt(subtotal);
+      
+      const discRow = document.getElementById('checkout-discount-row');
+      if (discRow) {
+        if (discount > 0) {
+          discRow.classList.remove('hidden');
+          document.getElementById('checkout-discount').textContent = `-${fmt(discount)}`;
+        } else {
+          discRow.classList.add('hidden');
+        }
+      }
+
+      document.getElementById('checkout-shipping').textContent = shipping === 0 ? 'FREE' : fmt(shipping);
+      document.getElementById('checkout-total').textContent = fmt(total);
+
+      if (window.currencyManager) window.currencyManager.updateDOM();
+    }
+
+    function setPayMethod(method) {
+      document.getElementById('card-payment-box').classList.add('hidden');
+      document.getElementById('paypal-box').classList.add('hidden');
+      document.getElementById('applepay-box').classList.add('hidden');
+
+      document.querySelectorAll('[id^="pay-btn-"]').forEach(btn => {
+        btn.className = 'p-3 rounded-xl border border-stone-200 text-stone-600 font-medium text-xs text-center flex flex-col items-center gap-1 hover:border-stone-400';
+      });
+
+      if (method === 'card') {
+        document.getElementById('card-payment-box').classList.remove('hidden');
+        document.getElementById('pay-btn-card').className = 'p-3 rounded-xl border-2 border-[#0F382A] bg-[#0F382A]/5 text-[#0F382A] font-bold text-xs text-center flex flex-col items-center gap-1';
+      } else if (method === 'paypal') {
+        document.getElementById('paypal-box').classList.remove('hidden');
+        document.getElementById('pay-btn-paypal').className = 'p-3 rounded-xl border-2 border-[#0F382A] bg-[#0F382A]/5 text-[#0F382A] font-bold text-xs text-center flex flex-col items-center gap-1';
+      } else if (method === 'applepay') {
+        document.getElementById('applepay-box').classList.remove('hidden');
+        document.getElementById('pay-btn-applepay').className = 'p-3 rounded-xl border-2 border-[#0F382A] bg-[#0F382A]/5 text-[#0F382A] font-bold text-xs text-center flex flex-col items-center gap-1';
+      }
+    }
+
+    function applyCheckoutCoupon() {
+      const input = document.getElementById('checkout-coupon-input');
+      if (input && window.cartManager) {
+        window.cartManager.applyCoupon(input.value);
+        input.value = '';
+      }
+    }
+
+    function submitOrder() {
+      if (!window.cartManager || window.cartManager.getCart().length === 0) {
+        if (window.toast) window.toast.show("Please add teas to your bag before checking out!", "error");
+        return;
+      }
+
+      // Generate random order ID
+      const orderId = 'CTH-AIR-' + Math.floor(100000 + Math.random() * 900000);
+      const cart = [...window.cartManager.getCart()];
+      const totalUSD = window.cartManager.getTotalUSD();
+      const fmt = (usd) => window.currencyManager ? window.currencyManager.format(usd) : `$${usd.toFixed(2)}`;
+
+      // Populate confirmation screen
+      document.getElementById('confirmed-order-id').textContent = orderId;
+      document.getElementById('confirmed-total-paid').textContent = fmt(totalUSD);
+
+      const fname = document.getElementById('ship-fname').value || 'Alexander';
+      const lname = document.getElementById('ship-lname').value || 'Hamilton';
+      const address = document.getElementById('ship-address').value || '55 Wall St';
+      const city = document.getElementById('ship-city').value || 'New York';
+      const state = document.getElementById('ship-state').value || 'NY';
+      const zip = document.getElementById('ship-zip').value || '10005';
+      const country = document.getElementById('ship-country').value || 'United States';
+      const phone = document.getElementById('ship-phone').value || '+1 (555) 349-2049';
+
+      document.getElementById('confirmed-cust-name').textContent = `${fname} ${lname}`;
+      document.getElementById('confirmed-cust-address').textContent = address;
+      document.getElementById('confirmed-cust-city').textContent = `${city}, ${state} ${zip}, ${country}`;
+      document.getElementById('confirmed-cust-phone').textContent = phone;
+
+      // Populate manifest items
+      document.getElementById('confirmed-items-list').innerHTML = cart.map(item => `
+        <div class="flex justify-between py-1.5 border-b border-stone-100">
+          <span>${item.quantity}x ${item.name} (${item.packSize})</span>
+          <span class="font-bold">${fmt(item.priceUSD * item.quantity)}</span>
+        </div>
+      `).join('');
+
+      document.getElementById('track-order-btn-link').href = `track-order.html?orderId=${orderId}`;
+
+      // Transition views
+      document.getElementById('checkout-flow-container').classList.add('hidden');
+      document.getElementById('order-confirmed-container').classList.remove('hidden');
+
+      // Clear cart
+      window.cartManager.clearCart();
+
+      // Scroll top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (window.toast) {
+        window.toast.show(`Order <strong>${orderId}</strong> confirmed! Dispatched for packaging.`, 'success', 5000);
+      }
+    }
+  </script>
+</body>
+</html>

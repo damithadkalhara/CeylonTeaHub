@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tea Masterclass & Interactive Brew Timer | Ceylon Tea Hub</title>
+  <meta name="description" content="Master the art of brewing pure Ceylon teas. Interactive digital countdown steeping timer, temperature guide, water chemistry, and cold brew recipes.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              primary: '#0F382A',
+              secondary: '#164E3D',
+              dark: '#08231A',
+              gold: '#D4AF37',
+              goldLight: '#E5C07B',
+              cream: '#FBF9F4',
+              card: '#F4EFE6'
+            }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            display: ['Cinzel', 'serif'],
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <link rel="stylesheet" href="assets/css/custom.css">
+</head>
+<body class="bg-[#FBF9F4] text-zinc-800 antialiased selection:bg-[#D4AF37]/30 selection:text-[#0F382A]">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-[#08231A] text-[#E5C07B] py-2 px-4 text-xs font-medium border-b border-[#D4AF37]/20">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-[#D4AF37] animate-ping"></span>
+        <span>✈️ <strong>Direct Global Air Express</strong>: Free Worldwide Delivery on Orders Over <span data-price-usd="60">$60.00</span></span>
+      </div>
+      <div class="flex items-center gap-4 text-[11px] text-zinc-300">
+        <span>Coupon <strong class="text-white bg-[#0F382A] px-2 py-0.5 rounded border border-[#D4AF37]/40">CEYLON10</strong> (10% Off)</span>
+        <span class="hidden md:inline text-zinc-500">|</span>
+        <a href="track-order.html" class="hidden md:inline hover:text-[#E5C07B] transition-colors">Track Shipment</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-[#0F382A]/95 backdrop-blur-md border-b border-[#D4AF37]/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <button onclick="toggleMobileMenu()" class="lg:hidden text-[#E5C07B] p-2 hover:text-white transition-colors" aria-label="Open Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+
+        <!-- Brand Logo -->
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-11 h-11 rounded-full bg-gradient-to-br from-[#E5C07B] via-[#D4AF37] to-[#92690A] p-0.5 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+            <div class="w-full h-full rounded-full bg-[#0F382A] flex items-center justify-center text-[#E5C07B]">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-display text-xl font-bold tracking-wider text-white uppercase group-hover:text-[#E5C07B] transition-colors leading-none">Ceylon Tea Hub</span>
+            <span class="text-[10px] tracking-[0.25em] text-[#E5C07B] uppercase font-semibold mt-1">Pure Ceylon Heritage</span>
+          </div>
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium text-zinc-200">
+          <a href="index.html" class="hover:text-[#E5C07B] transition-colors">Home</a>
+          <a href="shop.html" class="hover:text-[#E5C07B] transition-colors">Tea Catalog</a>
+          <a href="shop.html?category=Black+Tea" class="hover:text-[#E5C07B] transition-colors">Single Estates</a>
+          <a href="about.html" class="hover:text-[#E5C07B] transition-colors">Our Heritage</a>
+          <a href="brewing-guide.html" class="text-[#E5C07B] font-semibold transition-colors flex items-center gap-1.5">
+            <span>Brew Masterclass</span>
+            <span class="bg-[#D4AF37]/20 text-[#E5C07B] text-[10px] px-1.5 py-0.5 rounded uppercase font-bold">Timer</span>
+          </a>
+          <a href="contact.html" class="hover:text-[#E5C07B] transition-colors">Contact & Export</a>
+        </nav>
+
+        <!-- Right Actions -->
+        <div class="flex items-center gap-3 sm:gap-4">
+          <div class="relative inline-block text-left">
+            <select class="currency-dropdown bg-[#08231A] text-[#E5C07B] border border-[#D4AF37]/30 text-xs font-semibold rounded-lg px-2.5 py-1.5 pr-6 cursor-pointer focus:outline-none focus:border-[#D4AF37] appearance-none shadow-sm">
+              <option value="USD">🇺🇸 USD ($)</option>
+              <option value="EUR">🇪🇺 EUR (€)</option>
+              <option value="GBP">🇬🇧 GBP (£)</option>
+              <option value="AUD">🇦🇺 AUD (A$)</option>
+              <option value="CAD">🇨🇦 CAD (C$)</option>
+              <option value="JPY">🇯🇵 JPY (¥)</option>
+              <option value="AED">🇦🇪 AED (د.إ)</option>
+              <option value="LKR">🇱🇰 LKR (Rs)</option>
+              <option value="SGD">🇸🇬 SGD (S$)</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1.5 text-[#E5C07B]">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+          </div>
+
+          <button onclick="openSearchModal()" class="text-zinc-200 hover:text-[#E5C07B] p-2 rounded-full hover:bg-white/5 transition-colors" title="Search">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </button>
+
+          <button onclick="openWishlistModal()" class="text-zinc-200 hover:text-rose-400 p-2 rounded-full hover:bg-white/5 transition-colors relative" title="Wishlist">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+            <span class="wishlist-count-badge hidden absolute -top-1 -right-1 bg-rose-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+          </button>
+
+          <button class="open-cart-drawer flex items-center gap-2 px-3.5 py-2 bg-[#D4AF37] hover:bg-[#E5C07B] text-[#0F382A] font-bold text-xs rounded-xl shadow-lg transition-transform active:scale-95">
+            <div class="relative">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+              <span class="cart-count-badge hidden absolute -top-2 -right-2 bg-[#0F382A] text-[#E5C07B] text-[9px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center border border-[#D4AF37]">0</span>
+            </div>
+            <span class="hidden sm:inline font-sans">Tea Bag</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobile-menu-backdrop" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300" onclick="toggleMobileMenu()"></div>
+  <div id="mobile-menu-drawer" class="fixed top-0 left-0 bottom-0 w-80 bg-[#0F382A] text-white z-50 p-6 flex flex-col justify-between -translate-x-full transition-transform duration-300 shadow-2xl border-r border-[#D4AF37]/30">
+    <div>
+      <div class="flex items-center justify-between pb-6 border-b border-[#D4AF37]/20 mb-6">
+        <span class="font-display font-bold text-base tracking-wider uppercase">Ceylon Tea Hub</span>
+        <button onclick="toggleMobileMenu()" class="text-zinc-400 hover:text-white p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <nav class="space-y-4 text-base font-medium">
+        <a href="index.html" class="block py-2 text-zinc-200 hover:text-[#E5C07B] border-b border-white/5">Home</a>
+        <a href="shop.html" class="block py-2 text-zinc-200 hover:text-[#E5C07B] border-b border-white/5">Tea Catalog</a>
+        <a href="about.html" class="block py-2 text-zinc-200 hover:text-[#E5C07B] border-b border-white/5">Our Ceylon Heritage</a>
+        <a href="brewing-guide.html" class="block py-2 text-[#E5C07B] font-semibold border-b border-white/5">Tea Masterclass & Timers</a>
+        <a href="contact.html" class="block py-2 text-zinc-200 hover:text-[#E5C07B] border-b border-white/5">Global Export & B2B</a>
+        <a href="track-order.html" class="block py-2 text-zinc-200 hover:text-[#E5C07B]">Track Shipment</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Hero Header -->
+  <section class="py-16 bg-[#08231A] text-white border-b border-[#D4AF37]/20">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+      <span class="text-xs font-bold text-[#D4AF37] uppercase tracking-[0.2em] mb-2 block">Sommelier Masterclass</span>
+      <h1 class="text-3xl sm:text-5xl font-serif font-bold text-white mb-4">The Art of Pure Ceylon Brewing</h1>
+      <p class="text-sm sm:text-base text-zinc-300 max-w-2xl mx-auto">
+        Orthodox tea is a living botanical infusion. Water temperature, leaf-to-water ratio, and precise steep duration unlock the true aromatic soul of the high country.
+      </p>
+    </div>
+  </section>
+
+  <!-- Interactive Live Brewing Timer Section -->
+  <section class="py-16 bg-[#FBF9F4]">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="bg-gradient-to-br from-[#0F382A] to-[#08231A] text-white rounded-3xl p-8 sm:p-12 border border-[#D4AF37]/40 shadow-2xl">
+        
+        <div class="text-center max-w-xl mx-auto mb-8">
+          <span class="px-3.5 py-1 rounded-full bg-[#D4AF37]/20 text-[#E5C07B] text-xs font-bold uppercase tracking-wider inline-block mb-3 border border-[#D4AF37]/30">Interactive Steeping Engine</span>
+          <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white">Select Your Harvest to Begin</h2>
+        </div>
+
+        <!-- Tea Type Selector Tabs -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 mb-10" id="timer-tea-buttons">
+          <button onclick="selectTimerTea(0)" class="timer-tea-btn active p-3 rounded-xl border border-[#D4AF37] bg-[#D4AF37]/20 text-white text-xs font-bold text-center transition-all">
+            <span>Silver Tips</span>
+            <span class="block text-[10px] text-[#E5C07B] mt-0.5">75°C • 5m</span>
+          </button>
+          <button onclick="selectTimerTea(1)" class="timer-tea-btn p-3 rounded-xl border border-white/10 hover:border-[#D4AF37]/50 bg-white/5 text-zinc-300 text-xs font-medium text-center transition-all">
+            <span>Nuwara Eliya</span>
+            <span class="block text-[10px] text-zinc-400 mt-0.5">95°C • 3m</span>
+          </button>
+          <button onclick="selectTimerTea(2)" class="timer-tea-btn p-3 rounded-xl border border-white/10 hover:border-[#D4AF37]/50 bg-white/5 text-zinc-300 text-xs font-medium text-center transition-all">
+            <span>Dimbula OP1</span>
+            <span class="block text-[10px] text-zinc-400 mt-0.5">95°C • 4m</span>
+          </button>
+          <button onclick="selectTimerTea(3)" class="timer-tea-btn p-3 rounded-xl border border-white/10 hover:border-[#D4AF37]/50 bg-white/5 text-zinc-300 text-xs font-medium text-center transition-all">
+            <span>Emerald Green</span>
+            <span class="block text-[10px] text-zinc-400 mt-0.5">80°C • 2.5m</span>
+          </button>
+          <button onclick="selectTimerTea(4)" class="timer-tea-btn p-3 rounded-xl border border-white/10 hover:border-[#D4AF37]/50 bg-white/5 text-zinc-300 text-xs font-medium text-center transition-all">
+            <span>Spiced Chai</span>
+            <span class="block text-[10px] text-zinc-400 mt-0.5">100°C • 5m</span>
+          </button>
+          <button onclick="selectTimerTea(5)" class="timer-tea-btn p-3 rounded-xl border border-white/10 hover:border-[#D4AF37]/50 bg-white/5 text-zinc-300 text-xs font-medium text-center transition-all">
+            <span>Ruhuna Black</span>
+            <span class="block text-[10px] text-zinc-400 mt-0.5">100°C • 4m</span>
+          </button>
+        </div>
+
+        <!-- Timer Display Panel -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-[#164E3D]/40 rounded-2xl p-6 sm:p-8 border border-[#D4AF37]/20">
+          
+          <!-- Circular Timer Graphic -->
+          <div class="md:col-span-5 flex flex-col items-center justify-center">
+            <div class="relative w-52 h-52 flex items-center justify-center">
+              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="44" stroke="rgba(255,255,255,0.1)" stroke-width="5" fill="none" />
+                <circle id="timer-circle-progress" cx="50" cy="50" r="44" stroke="#D4AF37" stroke-width="5" stroke-dasharray="276.46" stroke-dashoffset="0" stroke-linecap="round" fill="none" class="transition-all duration-1000 ease-linear" />
+              </svg>
+
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <span id="timer-display" class="font-serif font-bold text-4xl text-white tracking-wider">05:00</span>
+                <span id="timer-status-text" class="text-[10px] uppercase font-bold text-[#E5C07B] tracking-widest mt-1">Ready to Steep</span>
+              </div>
+            </div>
+
+            <!-- Timer Action Buttons -->
+            <div class="flex items-center gap-3 mt-6">
+              <button id="timer-start-btn" onclick="toggleTimer()" class="px-6 py-2.5 bg-[#D4AF37] hover:bg-[#E5C07B] text-[#08231A] font-bold text-xs rounded-xl shadow-lg transition-transform active:scale-95 flex items-center gap-2">
+                <svg id="timer-play-icon" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                <span id="timer-btn-label">Start Steeping</span>
+              </button>
+
+              <button onclick="resetTimer()" class="px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white font-medium text-xs rounded-xl transition-colors">
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <!-- Target Parameters & Sommelier Guidance -->
+          <div class="md:col-span-7 space-y-4">
+            <div>
+              <span id="timer-selected-title" class="text-xl font-serif font-bold text-white block mb-1">Pure Ceylon Imperial Silver Tips</span>
+              <p id="timer-selected-desc" class="text-xs text-zinc-300 leading-relaxed">Delicate hand-plucked white tea buds. High water temperatures will scorch the velvet leaf; keep temperature soft at 75°C to extract natural honeysuckle nectar.</p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 pt-4 border-t border-white/10 text-center">
+              <div class="p-3 bg-white/5 rounded-xl border border-white/10">
+                <span class="text-[10px] text-zinc-400 uppercase font-bold block">Water Temp</span>
+                <span id="timer-temp-val" class="text-sm font-bold text-[#E5C07B]">75°C / 167°F</span>
+              </div>
+              <div class="p-3 bg-white/5 rounded-xl border border-white/10">
+                <span class="text-[10px] text-zinc-400 uppercase font-bold block">Leaf Ratio</span>
+                <span id="timer-leaf-val" class="text-sm font-bold text-[#E5C07B]">2.5g / 200ml</span>
+              </div>
+              <div class="p-3 bg-white/5 rounded-xl border border-white/10">
+                <span class="text-[10px] text-zinc-400 uppercase font-bold block">Infusions</span>
+                <span id="timer-infusions-val" class="text-sm font-bold text-[#E5C07B]">3 Infusions</span>
+              </div>
+            </div>
+
+            <!-- Sommelier Tip -->
+            <div class="p-3.5 bg-[#08231A]/70 rounded-xl border border-[#D4AF37]/30 text-xs flex items-start gap-2.5">
+              <span class="text-[#D4AF37] text-sm">💡</span>
+              <p id="timer-tip" class="text-zinc-300 italic">"Always decant every single drop from your infuser once the timer chimes to avoid residual bitterness in the second infusion."</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Water Chemistry & Teaware Masterclass -->
+  <section class="py-16 bg-[#F4EFE6] border-y border-amber-900/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <span class="text-xs font-bold text-amber-800 tracking-widest uppercase mb-2 block">The Sommelier's Secret</span>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-gray-900 mb-4">Water Chemistry & Mineral Balance</h2>
+        <p class="text-sm text-stone-600">A cup of tea is 99% water. Understanding your water profile is the difference between a dull brew and a radiant golden liquor.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-800 flex items-center justify-center font-bold text-sm mb-4">pH</div>
+          <h4 class="font-serif font-bold text-gray-900 text-base mb-2">Neutral pH (6.8 - 7.2)</h4>
+          <p class="text-xs text-stone-600 leading-relaxed">Hard alkaline water flattens high-grown briskness and clouds the liquor. Slightly soft, filtered spring water preserves sparkling amber hues.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm">
+          <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-800 flex items-center justify-center font-bold text-sm mb-4">TDS</div>
+          <h4 class="font-serif font-bold text-gray-900 text-base mb-2">Total Dissolved Solids (&lt;100 ppm)</h4>
+          <p class="text-xs text-stone-600 leading-relaxed">High mineral content blocks the extraction of delicate aroma esters. Aim for total dissolved solids between 30 and 80 ppm.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center font-bold text-sm mb-4">O₂</div>
+          <h4 class="font-serif font-bold text-gray-900 text-base mb-2">Freshly Drawn Cold Water</h4>
+          <p class="text-xs text-stone-600 leading-relaxed">Never re-boil standing kettle water. Re-boiling depletes dissolved oxygen, making Ceylon black tea taste flat and lifeless.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Cold Brew Ceylon Master Recipe -->
+  <section class="py-20 bg-[#FBF9F4]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        
+        <div>
+          <span class="text-xs font-bold text-amber-800 tracking-widest uppercase mb-2 block">Modern Refreshment</span>
+          <h2 class="text-3xl sm:text-4xl font-serif font-bold text-gray-900 mb-6">Cold Brew High Mountain Ceylon</h2>
+          <p class="text-sm text-stone-600 mb-6 leading-relaxed">
+            Cold extraction in chilled spring water extracts maximum polyphenols, floral sweetness, and natural fruity brightness without releasing astringent tannins.
+          </p>
+
+          <div class="space-y-4 text-xs text-stone-700">
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-[#0F382A] text-[#E5C07B] flex items-center justify-center font-bold flex-shrink-0">1</span>
+              <p>Add <strong>10g of whole-leaf Ceylon OP1 or Silver Tips</strong> to a clean 1-Liter glass carafe.</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-[#0F382A] text-[#E5C07B] flex items-center justify-center font-bold flex-shrink-0">2</span>
+              <p>Fill with chilled pure mineral water. Add a sliver of organic lemon peel or fresh mint sprig if desired.</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-[#0F382A] text-[#E5C07B] flex items-center justify-center font-bold flex-shrink-0">3</span>
+              <p>Refrigerate for <strong>8 to 12 hours</strong>. Strain into chilled wine glasses over crystal ice spheres.</p>
+            </div>
+          </div>
+
+          <a href="shop.html" class="inline-block mt-8 px-6 py-3 bg-[#0F382A] text-[#E5C07B] text-xs font-bold rounded-xl shadow">Explore Cold Brew Candidates →</a>
+        </div>
+
+        <div class="rounded-3xl overflow-hidden shadow-2xl border border-amber-900/10">
+          <img src="assets/images/product_dimbula_estate.jpg" alt="Artisan Ceylon Brewed Tea" class="w-full h-full object-cover">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Universal Footer -->
+  <footer class="bg-[#04120D] text-zinc-400 pt-16 pb-12 border-t border-white/10 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
+        <div class="lg:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-[#0F382A] border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37]">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+            </div>
+            <span class="font-display text-lg font-bold text-white uppercase tracking-wider">Ceylon Tea Hub</span>
+          </div>
+          <p class="text-zinc-400 text-xs leading-relaxed max-w-sm">
+            Curating rare, single-origin orthodox teas directly from the highest mountain estates of Sri Lanka. 100% Lion Logo Quality Assured. Delivering freshness to connoisseurs worldwide.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-serif font-bold text-white text-sm mb-4">Tea Terroirs</h4>
+          <ul class="space-y-2.5">
+            <li><a href="shop.html" class="hover:text-[#E5C07B] transition-colors">Nuwara Eliya (6,200 ft)</a></li>
+            <li><a href="shop.html" class="hover:text-[#E5C07B] transition-colors">Dimbula Valley (4,500 ft)</a></li>
+            <li><a href="shop.html" class="hover:text-[#E5C07B] transition-colors">Uva Province (3,800 ft)</a></li>
+            <li><a href="shop.html" class="hover:text-[#E5C07B] transition-colors">Kandy Midlands (2,500 ft)</a></li>
+            <li><a href="shop.html" class="hover:text-[#E5C07B] transition-colors">Ruhuna Rainforest</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-serif font-bold text-white text-sm mb-4">Collections</h4>
+          <ul class="space-y-2.5">
+            <li><a href="shop.html?category=White+Tea" class="hover:text-[#E5C07B] transition-colors">Imperial Silver Tips</a></li>
+            <li><a href="shop.html?category=Black+Tea" class="hover:text-[#E5C07B] transition-colors">Single Estate Blacks</a></li>
+            <li><a href="shop.html?category=Green+Tea" class="hover:text-[#E5C07B] transition-colors">Emerald Green Teas</a></li>
+            <li><a href="shop.html?category=Herbal+%26+Spiced" class="hover:text-[#E5C07B] transition-colors">Ceylon Cinnamon Chai</a></li>
+            <li><a href="shop.html?category=Gift+Sets" class="hover:text-[#E5C07B] transition-colors">Mahogany Gift Chests</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-serif font-bold text-white text-sm mb-4">Global Hub</h4>
+          <ul class="space-y-2.5">
+            <li><a href="about.html" class="hover:text-[#E5C07B] transition-colors">Our 1867 Heritage</a></li>
+            <li><a href="brewing-guide.html" class="hover:text-[#E5C07B] transition-colors">Brewing Masterclass</a></li>
+            <li><a href="track-order.html" class="hover:text-[#E5C07B] transition-colors">Track Worldwide Shipment</a></li>
+            <li><a href="contact.html#wholesale" class="hover:text-[#E5C07B] transition-colors">B2B Bulk Export Inquiries</a></li>
+            <li><a href="contact.html" class="hover:text-[#E5C07B] transition-colors">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-zinc-500">
+        <p>© 2026 Ceylon Tea Hub (Pvt) Ltd. All Rights Reserved. Pure Ceylon Lion Logo License #SLTB/084.</p>
+        <div class="flex items-center gap-3 text-xs text-zinc-400">
+          <span>🔒 256-Bit SSL Encrypted</span>
+          <span>•</span>
+          <span>Visa</span>
+          <span>•</span>
+          <span>Mastercard</span>
+          <span>•</span>
+          <span>PayPal</span>
+          <span>•</span>
+          <span>Apple Pay</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Universal Shopping Cart Slide-out Drawer Component -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 pointer-events-none overflow-hidden">
+    <div id="cart-drawer-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 drawer-backdrop"></div>
+    <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div id="cart-drawer-panel" class="w-screen max-w-md bg-white shadow-2xl flex flex-col transform translate-x-full drawer-panel border-l border-amber-900/10">
+        
+        <div class="p-5 bg-[#0F382A] text-white flex items-center justify-between border-b border-[#D4AF37]/30">
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-[#E5C07B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            <h3 class="font-serif font-bold text-base">Your Tea Bag (<span class="cart-count-badge">0</span>)</h3>
+          </div>
+          <button class="close-cart-drawer text-zinc-400 hover:text-white p-1 transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
+
+        <div class="bg-[#F4EFE6] px-5 py-3 border-b border-amber-900/10 text-xs">
+          <p id="free-shipping-msg" class="text-stone-700 mb-1.5">Add <span class="font-bold text-[#0F382A]">$60.00</span> to unlock <strong>FREE Global Air Shipping</strong></p>
+          <div class="w-full bg-stone-300 h-1.5 rounded-full overflow-hidden">
+            <div id="free-shipping-progress" class="bg-[#0F382A] h-full transition-all duration-500" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-5" id="cart-drawer-items"></div>
+
+        <div class="p-5 bg-stone-50 border-t border-stone-200 space-y-4">
+          <div class="flex gap-2">
+            <input type="text" id="drawer-coupon-input" placeholder="Coupon (Try CEYLON10)" class="flex-1 px-3 py-2 bg-white text-xs border border-stone-300 rounded-lg uppercase tracking-wider font-semibold focus:outline-none focus:border-[#0F382A]">
+            <button onclick="applyDrawerCoupon()" class="px-4 py-2 bg-[#0F382A] text-[#E5C07B] text-xs font-bold rounded-lg hover:bg-[#164E3D] transition-colors">Apply</button>
+          </div>
+
+          <div class="space-y-1.5 text-xs text-stone-600">
+            <div class="flex justify-between">
+              <span>Subtotal:</span>
+              <span id="cart-drawer-subtotal" class="font-bold text-gray-900">$0.00</span>
+            </div>
+            <div id="cart-drawer-discount-row" class="hidden flex justify-between text-emerald-600 font-semibold">
+              <span>Discount (10%):</span>
+              <span id="cart-drawer-discount">-$0.00</span>
+            </div>
+            <div class="flex justify-between">
+              <span>International Air Shipping:</span>
+              <span id="cart-drawer-shipping">$9.99</span>
+            </div>
+            <div class="flex justify-between text-base font-serif font-bold text-gray-900 pt-2 border-t border-stone-200">
+              <span>Estimated Total:</span>
+              <span id="cart-drawer-total" class="text-[#0F382A]">$0.00</span>
+            </div>
+          </div>
+
+          <a href="checkout.html" class="block w-full py-3.5 px-6 bg-[#0F382A] text-[#E5C07B] hover:bg-[#164E3D] text-center font-serif font-bold text-sm rounded-xl shadow-lg transition-transform active:scale-95">
+            Proceed to Global Checkout →
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/currency.js"></script>
+  <script src="assets/js/wishlist.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <script src="assets/js/toast.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <!-- Interactive Steeping Timer Logic -->
+  <script>
+    const TIMER_PRESETS = [
+      {
+        name: "Pure Ceylon Imperial Silver Tips",
+        temp: "75°C (167°F)",
+        leaf: "2.5g / 200ml",
+        infusions: "3 Infusions",
+        durationSec: 300,
+        desc: "Delicate hand-plucked white tea buds. High water temperatures will scorch the velvet leaf; keep temperature soft at 75°C to extract natural honeysuckle nectar.",
+        tip: "Always decant every single drop from your infuser once the timer chimes to avoid residual bitterness in the second infusion."
+      },
+      {
+        name: "Nuwara Eliya Single Estate BOPF",
+        temp: "95°C (203°F)",
+        leaf: "3.0g / 220ml",
+        infusions: "1-2 Infusions",
+        durationSec: 180,
+        desc: "High mountain plateau black tea known as the Champagne of Ceylon. Infuse with fresh boiling water taken just off the boil for 3 minutes for crisp briskness.",
+        tip: "Sip pure without milk first to experience the delicate citrus and floral muscatel aromatics."
+      },
+      {
+        name: "Dimbula Valley Artisan OP1",
+        temp: "95°C (203°F)",
+        leaf: "3.0g / 240ml",
+        infusions: "2 Infusions",
+        durationSec: 240,
+        desc: "Whole wiry leaves from the western quality season. Requires 4 full minutes for the long leaf to unfurl and release rich caramel malt richness.",
+        tip: "Pairs wonderfully with afternoon pastries, lemon scones, or light cheeses."
+      },
+      {
+        name: "High Elevation Emerald Green Tea",
+        temp: "80°C (176°F)",
+        leaf: "2.5g / 220ml",
+        infusions: "3 Infusions",
+        durationSec: 150,
+        desc: "Pan-steamed high altitude green tea. Keep water between 75°C-80°C to preserve sweet chlorophyll umami and sweet roasted chestnut nuances.",
+        tip: "Do not cover tightly with heavy cast iron lids; let the steam breathe."
+      },
+      {
+        name: "Royal Ceylon Spiced Chai",
+        temp: "100°C (212°F)",
+        leaf: "3.5g / 200ml",
+        infusions: "1 Rich Simmer",
+        durationSec: 300,
+        desc: "Ceylon BOP blended with true Alba cinnamon, green cardamom, cloves, and ginger. Simmer with whole milk and brown jaggery sugar for 5 minutes.",
+        tip: "For authentic Sri Lankan tea boutique style, aerate by pouring back and forth between two vessels."
+      },
+      {
+        name: "Ruhuna Golden Caramel Black Tea",
+        temp: "100°C (212°F)",
+        leaf: "3.0g / 220ml",
+        infusions: "2 Infusions",
+        durationSec: 240,
+        desc: "Low-grown rainforest black tea with high soluble solids. Robust, malty, and thick with honey and date notes. Perfect with fresh cream or oat milk.",
+        tip: "Can withstand rolling boiling water at 100°C without turning overly sour."
+      }
+    ];
+
+    let currentPresetIdx = 0;
+    let totalDuration = 300;
+    let remainingTime = 300;
+    let timerInterval = null;
+    let isRunning = false;
+
+    // Web Audio Chime Generator
+    function playChime() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+
+        // 3-chord harmonic Tibetan bowl simulation
+        [528, 660, 792, 1056].forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime + (i * 0.1));
+          
+          gain.gain.setValueAtTime(0.2, ctx.currentTime + (i * 0.1));
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 3.5);
+          
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          
+          osc.start(ctx.currentTime + (i * 0.1));
+          osc.stop(ctx.currentTime + 3.5);
+        });
+      } catch (e) {
+        console.log("Audio not allowed yet without user gesture", e);
+      }
+    }
+
+    function selectTimerTea(idx) {
+      currentPresetIdx = idx;
+      const preset = TIMER_PRESETS[idx];
+      totalDuration = preset.durationSec;
+      remainingTime = preset.durationSec;
+
+      // Update buttons
+      const btns = document.querySelectorAll('.timer-tea-btn');
+      btns.forEach((btn, i) => {
+        if (i === idx) {
+          btn.className = 'timer-tea-btn active p-3 rounded-xl border border-[#D4AF37] bg-[#D4AF37]/20 text-white text-xs font-bold text-center transition-all';
+        } else {
+          btn.className = 'timer-tea-btn p-3 rounded-xl border border-white/10 hover:border-[#D4AF37]/50 bg-white/5 text-zinc-300 text-xs font-medium text-center transition-all';
+        }
+      });
+
+      // Update text
+      document.getElementById('timer-selected-title').textContent = preset.name;
+      document.getElementById('timer-selected-desc').textContent = preset.desc;
+      document.getElementById('timer-temp-val').textContent = preset.temp;
+      document.getElementById('timer-leaf-val').textContent = preset.leaf;
+      document.getElementById('timer-infusions-val').textContent = preset.infusions;
+      document.getElementById('timer-tip').textContent = `"${preset.tip}"`;
+
+      resetTimer();
+    }
+
+    function updateTimerUI() {
+      const minutes = Math.floor(remainingTime / 60);
+      const seconds = remainingTime % 60;
+      document.getElementById('timer-display').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+      // Update circle progress
+      const circle = document.getElementById('timer-circle-progress');
+      const circumference = 2 * Math.PI * 44; // 276.46
+      const fraction = remainingTime / totalDuration;
+      const offset = circumference * (1 - fraction);
+      circle.style.strokeDashoffset = offset;
+    }
+
+    function toggleTimer() {
+      if (isRunning) {
+        // Pause
+        clearInterval(timerInterval);
+        isRunning = false;
+        document.getElementById('timer-status-text').textContent = "Steeping Paused";
+        document.getElementById('timer-btn-label').textContent = "Resume Steeping";
+      } else {
+        // Start
+        isRunning = true;
+        document.getElementById('timer-status-text').textContent = "Steeping in Progress...";
+        document.getElementById('timer-btn-label').textContent = "Pause Steeping";
+
+        timerInterval = setInterval(() => {
+          remainingTime--;
+          updateTimerUI();
+
+          if (remainingTime <= 0) {
+            clearInterval(timerInterval);
+            isRunning = false;
+            document.getElementById('timer-status-text').innerHTML = "<span class='text-emerald-400 font-bold'>🎉 Infusion Complete! Pour Now!</span>";
+            document.getElementById('timer-btn-label').textContent = "Start Steeping";
+            playChime();
+            if (window.toast) {
+              window.toast.show(`Your <strong>${TIMER_PRESETS[currentPresetIdx].name}</strong> is perfectly steeped! Decant now and enjoy.`, 'success', 6000);
+            }
+          }
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      isRunning = false;
+      remainingTime = totalDuration;
+      document.getElementById('timer-status-text').textContent = "Ready to Steep";
+      document.getElementById('timer-btn-label').textContent = "Start Steeping";
+      updateTimerUI();
+    }
+
+    function applyDrawerCoupon() {
+      const input = document.getElementById('drawer-coupon-input');
+      if (input && window.cartManager) {
+        window.cartManager.applyCoupon(input.value);
+        input.value = '';
+      }
+    }
+  </script>
+</body>
+</html>
